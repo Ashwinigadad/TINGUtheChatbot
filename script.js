@@ -1,4 +1,3 @@
-// Function to send a message
 function sendMessage() {
     var input = document.getElementById("user-input").value.trim();
     if (!input) {
@@ -28,7 +27,7 @@ function sendToServer(input) {
     var obj = {
         userInput: input
     };
-    fetch("http://127.0.0.1:3000/api/test", {
+    fetch("http://127.0.0.1:3001/api/test", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
