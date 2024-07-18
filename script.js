@@ -40,12 +40,13 @@ function sendToServer(input) {
         return response.json();
     }).then(data => {
         if (data && data.response) {
-            displayMessage("Server", data.response);
+            displayMessage("Tingu", data.response);
         } else {
             throw new Error('Invalid response from server');
         }
     }).catch(error => {
         console.error("Error:", error);
         alert("Error occurred while fetching data from server.");
+        console.log(error);//
     });
 }
