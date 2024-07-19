@@ -47,6 +47,6 @@ function sendToServer(input) {
     }).catch(error => {
         console.error("Error:", error);
         alert("Error occurred while fetching data from server.");
-        console.log(error);//
+        console.log("hello")
     });
 }
