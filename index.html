@@ -1,23 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tingu</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbot with Bootstrap</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container mt-5">
-        <div class="chat-container">
-            <div class="card chat-box" id="chat-box"></div>
-            <div class="input-group mt-3">
-                <input type="text" class="form-control" id="user-input" placeholder="Type your message...">
-                <div class="input-group-append">
-                    <button class="btn btn-danger" type="button" onclick="sendMessage()">Send</button>
-                </div>
-            </div>
-        </div>
+
+  <div class="chat-container">
+    <div class="chat-header">
+      <h5>Chatbot</h5>
     </div>
-    <script src="script.js"></script>
+    <div class="chat-body" id="chat-body">
+      <!-- Chat messages will be dynamically added here -->
+    </div>
+    <div class="chat-footer">
+      <div class="input-group">
+        <input type="text" class="form-control" id="user-input" placeholder="Type your message...">
+        <button class="btn btn-primary" id="send-btn">Send</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+
 </body>
 </html>

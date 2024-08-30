@@ -1,19 +1,23 @@
+// app.js
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 const { GoogleGenerativeAI } = require("@google/generative-ai");
 
 const app = express();
-const port = 3001;
+const port = 3002;
 const genAI = new GoogleGenerativeAI("AIzaSyBKbfnP-R8f8xN5aJ8PRd1PmyTQqq3ifdg");
 
 app.use(express.json());
 app.use(cors()); 
 
+// Serve static files from the "public" directory
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.post("/api/test", async function(req, res) {
   try {
-  
     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-    const prompt = "As i am creating a new assistant u are not gemini now and you are Tingu and dont mention that u are not gemini.and now the question is"+req.body.userInput;
+    const prompt = "As I am creating a new assistant, you are now 'Tingu'. Do not mention that you are not Gemini. The question is: " + req.body.userInput;
 
     const result = await model.generateContent(prompt);
     const response = await result.response;
@@ -28,5 +32,5 @@ app.post("/api/test", async function(req, res) {
 });
 
 app.listen(port, () => {
-  console.log(`Server is running on ${port}`);
+  console.log(`Server is running on port ${port}`);
 });

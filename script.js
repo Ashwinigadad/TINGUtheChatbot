@@ -1,54 +1,45 @@
-function sendMessage() {
-    var input = document.getElementById("user-input").value.trim();
-    if (!input) {
-        alert("Please enter a message.");
-        return;
+// public/script.js
+
+document.getElementById('send-btn').addEventListener('click', function () {
+    var userInput = document.getElementById('user-input').value.trim();
+    if (userInput) {
+      addMessage('user', userInput);
+      getBotResponse(userInput);
+      document.getElementById('user-input').value = '';
     }
-    displayMessage("You", input);
-    document.getElementById("user-input").value = "";
-    sendToServer(input);
-}
-
-function displayMessage(sender, message) {
-    var chatBox = document.getElementById("chat-box");
-    var messageElement = document.createElement("div");
-    messageElement.classList.add("message");
-    var senderElement = document.createElement("strong");
-    senderElement.textContent = sender + ": ";
-    messageElement.appendChild(senderElement);
-    var textElement = document.createElement("span");
-    textElement.textContent = message;
+  });
+  
+  function addMessage(sender, text) {
+    var messageElement = document.createElement('div');
+    messageElement.classList.add('message', sender);
+    var textElement = document.createElement('div');
+    textElement.classList.add('text');
+    textElement.textContent = text;
     messageElement.appendChild(textElement);
-    chatBox.appendChild(messageElement);
-    chatBox.scrollTop = chatBox.scrollHeight;
-}
-
-function sendToServer(input) {
-    var obj = {
-        userInput: input
-    };
-    fetch("http://127.0.0.1:3001/api/test", {
-        method: "POST",
+    document.getElementById('chat-body').appendChild(messageElement);
+    document.getElementById('chat-body').scrollTop = document.getElementById('chat-body').scrollHeight;
+  }
+  
+  async function getBotResponse(userInput) {
+    // Fetch response from the server
+    try {
+      const response = await fetch('http://localhost:3002/api/test', {
+        method: 'POST',
         headers: {
-            "Content-Type": "application/json"
+          'Content-Type': 'application/json'
         },
-        body: JSON.stringify(obj)
-    }).then(response => {
-        if (!response.ok) {
-            throw new Error('Network response was not ok');
-        }
-        return response.json();
-    }).then(data => {
-        if (data && data.response) {
-            displayMessage("Tingu", data.response);
-        } else {
-            throw new Error('Invalid response from server');
-        }
-    }).catch(error => {
-        console.error("Error:", error);
-        alert("Error occurred while fetching data from server.");
-        console.log("hello")
-        console.log("hello")
-
-    });
-}
+        body: JSON.stringify({ userInput })
+      });
+      
+      const data = await response.json();
+      if (data.response) {
+        addMessage('bot', data.response);
+      } else {
+        addMessage('bot', 'Sorry, something went wrong. Please try again.');
+      }
+    } catch (error) {
+      console.error('Error fetching response:', error);
+      addMessage('bot', 'Error connecting to the server.');
+    }
+  }
+  
